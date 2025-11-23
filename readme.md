@@ -20,12 +20,12 @@ rgs sync --gu <GarminUsername> --gpw <GarminPassword> --ru <RenphoUsername> --rp
 ```
 ![Sync example](assets/sync.svg)
 
-if you have MFA enabled, you will need to preauthorize your garmin account and pass the MFA code to the application, afterwards you should be able to easily use the `rgs sync` command.
-```console
-rgs auth garmin --u <GarminUsername> --pw <GarminPassword>
-rgs auth garmin --u <GarminUsername> --mfa <MFA Code>
-```
-![Sync example](assets/mfa.svg)
+if you have MFA enabled, or if the standard login fails, you should use the provided Python script to authenticate and generate the necessary tokens.
+1. Install dependencies: `pip install -r requirements.txt`
+2. Run the script: `python3 garmin_auth.py`
+3. Follow the prompts to log in.
+4. Once successful, you can run the `rgs sync` command as usual.
+
 
 # Commands
 
@@ -84,7 +84,7 @@ Nope, the only things that are currently persisted are:
 - Generated .fit files
 
 ## Where is the data stored?
-By default the data is stored in default Documents directory, inside a `GarminRenphoSync` subdirectory. This can be modified by editing `config.json` - Set `UseDefaultCachePath` to `false` and provide the new base path in the `CustomCachePath` field
+By default the data is stored in default Documents directory, inside a `RenphoGarminSync` subdirectory. This can be modified by editing `config.json` - Set `UseDefaultCachePath` to `false` and provide the new base path in the `CustomCachePath` field
 
 ## Does the application automatically detect which measurements were already uploaded to garmin?
 Nope, during the initial run the application will try to sync all the measurements that it can find using Renpho API, the result of that will be reused during any subsequent run to upload only newly found measurements.
