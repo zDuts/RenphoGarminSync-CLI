@@ -1,0 +1,10 @@
+services:
+  renpho-garmin-sync:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: renpho-garmin-sync:latest
+    volumes:
+      - ./RenphoGarminSync.Console/config.json:/app/config.json
+      - ./RenphoGarminSync.Console/Persistence:/app/Persistence
+    restart: unless-stopped
