@@ -19,7 +19,7 @@ COPY . .
 
 # Build and publish
 WORKDIR "/src/RenphoGarminSync.Console"
-RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false /p:SelfContained=false
 
 FROM mcr.microsoft.com/dotnet/runtime:8.0 AS final
 WORKDIR /app
