@@ -19,6 +19,19 @@ namespace RenphoGarminSync.Console
 
             var fileContent = File.ReadAllText(filePath);
             _appConfig = JsonSerializer.Deserialize<AppConfig>(fileContent);
+
+            if (_appConfig is null)
+                throw new InvalidOperationException("Failed to deserialize configuration file.");
+
+            if (_appConfig.Garmin is null)
+                throw new InvalidOperationException("Configuration is missing 'Garmin' section.");
+
+            if (_appConfig.Renpho is null)
+                throw new InvalidOperationException("Configuration is missing 'Renpho' section.");
+
+            if (_appConfig.General is null)
+                throw new InvalidOperationException("Configuration is missing 'General' section.");
+
             return _appConfig;
         }
     }
