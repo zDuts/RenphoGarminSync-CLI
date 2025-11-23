@@ -106,28 +106,25 @@ namespace RenphoGarminSync.ConsoleApp
         {
 
             var garminUsernameOption = new Option<string>(["--garminUsername", "--gu"], "Garmin username/email.");
-            garminUsernameOption.IsRequired = true;
+            garminUsernameOption.SetDefaultValueFactory(() => Environment.GetEnvironmentVariable("RGS_GARMIN_USERNAME"));
 
             var garminPasswordOption = new Option<string>(["--garminPassword", "--gpw"], "Garmin password.");
-            garminPasswordOption.IsRequired = false;
+            garminPasswordOption.SetDefaultValueFactory(() => Environment.GetEnvironmentVariable("RGS_GARMIN_PASSWORD"));
 
             var renphoUsernameOption = new Option<string>(["--renphoUsername", "--ru"], "Renpho username/email.");
-            renphoUsernameOption.IsRequired = true;
+            renphoUsernameOption.SetDefaultValueFactory(() => Environment.GetEnvironmentVariable("RGS_RENPHO_USERNAME"));
 
             var renphoPasswordOption = new Option<string>(["--renphoPassword", "--rpw"], "Renpho password.");
-            renphoPasswordOption.IsRequired = true;
+            renphoPasswordOption.SetDefaultValueFactory(() => Environment.GetEnvironmentVariable("RGS_RENPHO_PASSWORD"));
 
             var renphoProfileOption = new Option<string>(["--renphoProfile", "--rprofile"], "Renpho profile.");
-            renphoProfileOption.IsRequired = false;
-            renphoProfileOption.SetDefaultValue(string.Empty);
+            renphoProfileOption.SetDefaultValueFactory(() => Environment.GetEnvironmentVariable("RGS_RENPHO_PROFILE"));
 
             var dryRunOption = new Option<bool>(["--dry-run"], "Should only check for new measurements, without actually processing any of the entries.");
-            dryRunOption.IsRequired = false;
-            dryRunOption.SetDefaultValue(false);
+            dryRunOption.SetDefaultValueFactory(() => bool.TryParse(Environment.GetEnvironmentVariable("RGS_DRY_RUN"), out var b) && b);
 
             var noFitFilesOption = new Option<bool>(["--no-fit-files"], "Should skip saving of the FIT files before sending them to Garmin.");
-            noFitFilesOption.IsRequired = false;
-            noFitFilesOption.SetDefaultValue(false);
+            noFitFilesOption.SetDefaultValueFactory(() => bool.TryParse(Environment.GetEnvironmentVariable("RGS_NO_FIT_FILES"), out var b) && b);
 
             var syncCommand = new Command("sync", "Sync Renpho body measurements with Garmin.")
             {
@@ -149,6 +146,25 @@ namespace RenphoGarminSync.ConsoleApp
                 var renphoProfile = context.ParseResult.GetValueForOption(renphoProfileOption);
                 var dryRun = context.ParseResult.GetValueForOption(dryRunOption);
                 var noFitFiles = context.ParseResult.GetValueForOption(noFitFilesOption);
+
+                if (string.IsNullOrWhiteSpace(garminUsername))
+                {
+                    AnsiConsole.MarkupLine("[red]Error: Garmin username is required. Provide it via --gu or RGS_GARMIN_USERNAME env var.[/]");
+                    context.ExitCode = 1;
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(renphoUsername))
+                {
+                    AnsiConsole.MarkupLine("[red]Error: Renpho username is required. Provide it via --ru or RGS_RENPHO_USERNAME env var.[/]");
+                    context.ExitCode = 1;
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(renphoPassword))
+                {
+                    AnsiConsole.MarkupLine("[red]Error: Renpho password is required. Provide it via --rpw or RGS_RENPHO_PASSWORD env var.[/]");
+                    context.ExitCode = 1;
+                    return;
+                }
 
                 try
                 {

@@ -36,15 +36,15 @@ Sync Renpho body measurements with Garmin.
 
 #### Options
 
-| Option                                                            | Description                                                                                              |
-|-------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
-| `--garminUsername`, `--gu <garminUsername>` (REQUIRED)            | Garmin username/email.                                                                                   |
-| `--garminPassword`, `--gpw <garminPassword>`                      | Garmin password.                                                                                         |
-| `--renphoUsername`, `--ru <renphoUsername>` (REQUIRED)            | Renpho username/email.                                                                                   |
-| `--renphoPassword`, `--rpw <renphoPassword>` (REQUIRED)           | Renpho password.                                                                                         |
-| `--renphoProfile`, `--rprofile <renphoProfile>`                   | Renpho profile. [default: None]                                                                          |
-| `--dry-run`                                                       | Should only check for new measurements, without actually processing any of the entries. [default: False] |
-| `--no-fit-files`                                                  | Should skip saving of the FIT files before sending them to Garmin. [default: False]                      |
+| Option                                                            | Env Var               | Description                                                                                              |
+|-------------------------------------------------------------------|-----------------------|----------------------------------------------------------------------------------------------------------|
+| `--garminUsername`, `--gu <garminUsername>` (REQUIRED)            | `RGS_GARMIN_USERNAME` | Garmin username/email.                                                                                   |
+| `--garminPassword`, `--gpw <garminPassword>`                      | `RGS_GARMIN_PASSWORD` | Garmin password.                                                                                         |
+| `--renphoUsername`, `--ru <renphoUsername>` (REQUIRED)            | `RGS_RENPHO_USERNAME` | Renpho username/email.                                                                                   |
+| `--renphoPassword`, `--rpw <renphoPassword>` (REQUIRED)           | `RGS_RENPHO_PASSWORD` | Renpho password.                                                                                         |
+| `--renphoProfile`, `--rprofile <renphoProfile>`                   | `RGS_RENPHO_PROFILE`  | Renpho profile. [default: None]                                                                          |
+| `--dry-run`                                                       | `RGS_DRY_RUN`         | Should only check for new measurements, without actually processing any of the entries. [default: False] |
+| `--no-fit-files`                                                  | `RGS_NO_FIT_FILES`    | Should skip saving of the FIT files before sending them to Garmin. [default: False]                      |
 
 ---
 

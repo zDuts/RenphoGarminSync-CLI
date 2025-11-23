@@ -7,4 +7,13 @@ services:
     volumes:
       - ./RenphoGarminSync.Console/config.json:/app/config.json
       - ./RenphoGarminSync.Console/Persistence:/app/Persistence
+    environment:
+      - RGS_GARMIN_USERNAME=
+      - RGS_GARMIN_PASSWORD=
+      - RGS_RENPHO_USERNAME=
+      - RGS_RENPHO_PASSWORD=
+      - RGS_RENPHO_PROFILE=
+      - RGS_DRY_RUN=false
+      - RGS_NO_FIT_FILES=false
+    command: sync
     restart: unless-stopped
